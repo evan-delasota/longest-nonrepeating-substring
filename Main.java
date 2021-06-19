@@ -3,7 +3,7 @@ import java.util.Map;
 
 class Main {
   public static void main(String[] args) {
-    System.out.println(longestSubstring("abcabcbb"));
+    System.out.println(longestSubstring("abcabcbbcxzghyu"));
   }
 
   public static int longestSubstring(String s) {
@@ -12,16 +12,16 @@ class Main {
         }
         
         Map<Character, Integer> charIndex = new HashMap<>();
-        int slider = 0;
         int maxSubstringLength = 0;
         
-        for (int i = 0, j = 0; j < s.length(); ++j) {
-            char c = s.charAt(j);
-            if (charIndex.containsKey(c)) {
-                i = Math.max(charIndex.get(c), i);
-            }
-            maxSubstringLength = Math.max(maxSubstringLength, j - i + 1);
-            charIndex.put(c, j + 1);
+        for (int leftSlider = 0, rightSlider = 0; rightSlider < s.length(); ++rightSlider) {
+          char ch = s.charAt(rightSlider);
+          if (charIndex.containsKey(ch)) {
+            leftSlider = Math.max(charIndex.get(ch), leftSlider);
+          }
+          maxSubstringLength = Math.max(maxSubstringLength, rightSlider - leftSlider + 1);
+          charIndex.put(ch, rightSlider + 1);
+
         }
         
         return maxSubstringLength;
